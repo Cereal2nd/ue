@@ -1,41 +1,30 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { NbAService } from './nba.service';
+import { MatTable } from '@angular/material/table';
+import { BedrijflistDataSource, BedrijflistItem } from './bedrijflist-datasource';
 
 @Component({
   selector: 'app-bedrijflist',
   templateUrl: './bedrijflist.component.html',
   styleUrls: ['./bedrijflist.component.scss']
 })
-export class BedrijflistComponent implements OnInit {
-  columns = ['name', 'team'];
-  dataSource: any;
+export class BedrijflistComponent implements AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table!: MatTable<BedrijflistItem>;
+  dataSource: BedrijflistDataSource;
 
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
-  constructor(private nbaService: NbAService) {
+  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  displayedColumns = ['id', 'name'];
 
-
-
+  constructor() {
+    this.dataSource = new BedrijflistDataSource();
   }
 
-
-
-  ngOnInit(): void {
-    this.nbaService.getData().subscribe((data) => {
-      this.dataSource = data;
-    });
-
-
-    //this.dataSource = new TableVirtualScrollDataSource(this.data);
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
-  }
-
-  filter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
   }
 }
