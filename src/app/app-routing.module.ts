@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import {BedrijflistComponent } from './admin/bedrijflist/bedrijflist.component';
 
 const routes: Routes = [
-    { path: '',   redirectTo: '/list', pathMatch: 'full' },
-    { path: 'list', component: BedrijflistComponent }
+  { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule) }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
