@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';
 
 
 import { BedrijflistComponent } from './bedrijflist/bedrijflist.component';
-
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,11 +15,11 @@ import { BedrijflistComponent } from './bedrijflist/bedrijflist.component';
   ],
   imports: [
     CommonModule,
-    MatTableDataSource,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+    AdminRoutingModule
   ]
 })
-export class AdminModule { }
+export class AdminModule {}
